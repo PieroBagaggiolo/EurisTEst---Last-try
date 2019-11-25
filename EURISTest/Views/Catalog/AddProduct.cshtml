@@ -1,47 +1,45 @@
-﻿@model IEnumerable<EURISTest.Models.ProductCatalog>
+﻿@model EURISTest.Models.ProductCatalog
 
-    @{
-        ViewBag.Title = "Prodotti";
-    }
+@{
+    ViewBag.Title = "Create";
+}
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                <h2> @Html.DisplayFor(modelItem => item.Catalog.Description)</h2>
-            </td>
-        </tr>
-        break;
-    }
+<h2>Create a new relation</h2>
 
-    <table>
-        <tr>
-            <th>
-                Prodotto
-            </th>
-            <td></td>
-            <th>
-                @Html.DisplayNameFor(model => model.FKCatalogId)
-            </th>
-            <th></th>
-        </tr>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.Description)
-                </td>
-                <td></td>
-                <td>
-                    @Html.ActionLink("Edit", "EditV", new { id = item.FKCatalogId }) |
-                    @Html.ActionLink("Delete", "DeletePro", new { id = item.FKCatalogId })
-                </td>
-            </tr>
-        }
+    <fieldset>
+        <legend>ProductCatalog</legend>
 
-    </table>
-    <p>
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FKCatalogId, "Catalog")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("FKCatalogId")
+            @Html.ValidationMessageFor(model => model.FKCatalogId)
+        </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FKProductId, "Product")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("FKProductId", String.Empty)
+            @Html.ValidationMessageFor(model => model.FKProductId)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

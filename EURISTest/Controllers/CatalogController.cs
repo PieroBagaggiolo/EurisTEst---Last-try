@@ -113,9 +113,37 @@ namespace EURISTest.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        public ActionResult AddProduct()
+        public ActionResult AddProduct(int id = 0)
         {
+            
+            CatalogModel catalogmodel = db.Catalogs.Find(id);
+            if (catalogmodel == null)
+            {
+                return HttpNotFound();
+            }
+            List<CatalogModel> listCatalog = new List<CatalogModel>();
+            listCatalog.Add(catalogmodel);
+            
+            ViewBag.FKCatalogId = new SelectList(listCatalog, "id", "Description");
+            ViewBag.FKProductId = new SelectList(db.Products, "Id", "Description");
             return View();
+            
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddProduct(ProductCatalog productcatalog)
+        {
+            if (ModelState.IsValid)
+            {
+                db.ProductCatalogs.Add(productcatalog);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.FKCatalogId = new SelectList(db.Catalogs, "Id", "Description", productcatalog.FKCatalogId);
+            ViewBag.FKProductId = new SelectList(db.Products, "Id", "Description", productcatalog.FKProductId);
+            return View(productcatalog);
         }
 
         protected override void Dispose(bool disposing)
