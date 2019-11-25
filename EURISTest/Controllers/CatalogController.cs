@@ -113,6 +113,10 @@ namespace EURISTest.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult AddProduct()
+        {
+            return View();
+        }
 
         protected override void Dispose(bool disposing)
         {
