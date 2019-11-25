@@ -26,11 +26,18 @@ namespace EURISTest.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            
             CatalogModel catalogmodel = db.Catalogs.Find(id);
             if (catalogmodel == null)
             {
                 return HttpNotFound();
             }
+            List<ProductCatalog> listCatalog = new List<ProductCatalog>();
+            foreach(var item in db.ProductCatalogs.ToList())
+            {
+                listCatalog.Add(item);
+            }
+            
             return View(catalogmodel);
         }
 
@@ -129,7 +136,6 @@ namespace EURISTest.Controllers
             return View();
             
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddProduct(ProductCatalog productcatalog)

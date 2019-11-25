@@ -15,6 +15,13 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.Description)
     </div>
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.ProductsCatalogs)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ProductsCatalogs)
+    </div>
+
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
