@@ -1,29 +1,32 @@
-﻿@model EURISTest.Models.CatalogModel
+﻿@model IEnumerable<EURISTest.Models.ProductCatalog>
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Index";
 }
 
 <h2>Dettagli Catalogo</h2>
 
-<fieldset>
-    <legend>CatalogModel</legend>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Catalog.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product.Description)
+        </th>
+        <th></th>
+    </tr>
 
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Description)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
-    </div>
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.ProductsCatalogs)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ProductsCatalogs)
-    </div>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Catalog.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Description)
+            </td>
+        </tr>
+    }
 
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</table>

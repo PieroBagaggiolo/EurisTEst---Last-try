@@ -26,19 +26,21 @@ namespace EURISTest.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            
             CatalogModel catalogmodel = db.Catalogs.Find(id);
             if (catalogmodel == null)
             {
                 return HttpNotFound();
             }
             List<ProductCatalog> listCatalog = new List<ProductCatalog>();
-            foreach(var item in db.ProductCatalogs.ToList())
+            foreach(var item in db.ProductCatalogs.Include(x=>x.Catalog).Include(x=>x.Product))
             {
-                listCatalog.Add(item);
+                if(catalogmodel.Id == item.FKCatalogId)
+                {
+                    listCatalog.Add(item);
+                }
             }
             
-            return View(catalogmodel);
+            return View(listCatalog);
         }
 
         //
