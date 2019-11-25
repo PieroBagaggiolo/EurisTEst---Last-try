@@ -41,7 +41,7 @@ namespace EURISTest.Controllers
         public ActionResult Create()
         {
             ViewBag.FKCatalogId = new SelectList(db.Catalogs, "Id", "Description");
-            ViewBag.FKProductId = new SelectList(db.Products, "Id", "Code");
+            ViewBag.FKProductId = new SelectList(db.Products, "Id", "Description");
             return View();
         }
 
@@ -60,7 +60,7 @@ namespace EURISTest.Controllers
             }
 
             ViewBag.FKCatalogId = new SelectList(db.Catalogs, "Id", "Description", productcatalog.FKCatalogId);
-            ViewBag.FKProductId = new SelectList(db.Products, "Id", "Code", productcatalog.FKProductId);
+            ViewBag.FKProductId = new SelectList(db.Products, "Id", "Description", productcatalog.FKProductId);
             return View(productcatalog);
         }
 
@@ -75,7 +75,7 @@ namespace EURISTest.Controllers
                 return HttpNotFound();
             }
             ViewBag.FKCatalogId = new SelectList(db.Catalogs, "Id", "Description", productcatalog.FKCatalogId);
-            ViewBag.FKProductId = new SelectList(db.Products, "Id", "Code", productcatalog.FKProductId);
+            ViewBag.FKProductId = new SelectList(db.Products, "Id", "Description", productcatalog.FKProductId);
             return View(productcatalog);
         }
 
@@ -93,7 +93,7 @@ namespace EURISTest.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.FKCatalogId = new SelectList(db.Catalogs, "Id", "Description", productcatalog.FKCatalogId);
-            ViewBag.FKProductId = new SelectList(db.Products, "Id", "Code", productcatalog.FKProductId);
+            ViewBag.FKProductId = new SelectList(db.Products, "Id", "Description", productcatalog.FKProductId);
             return View(productcatalog);
         }
 
