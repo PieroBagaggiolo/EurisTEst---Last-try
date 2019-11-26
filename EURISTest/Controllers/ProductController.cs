@@ -16,9 +16,30 @@ namespace EURISTest.Controllers
         //
         // GET: /Product/
 
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string search)
         {
-            return View(db.Products.ToList());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "code_desc" : "";
+            ViewBag.NameSortParm = sortOrder == "description" ? "description" : "description";
+
+            var products = from p in db.Products
+                           select p;
+
+            if(!String.IsNullOrEmpty(search))
+            {
+                products = products.Where(s => s.Code.Contains(search) || s.Description.Contains(search));
+            }
+
+            switch (sortOrder)
+            {
+                case "code_desc":
+                    products = products.OrderByDescending(p => p.Code);
+                    break;
+                case "description":
+                    products = products.OrderBy(p => p.Description);
+                    break;
+            }
+            return View(products.ToList());
+
         }
 
         //
@@ -113,6 +134,8 @@ namespace EURISTest.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        
 
         protected override void Dispose(bool disposing)
         {

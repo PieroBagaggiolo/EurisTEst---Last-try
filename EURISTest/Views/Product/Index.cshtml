@@ -9,13 +9,21 @@
 <p>
     @Html.ActionLink("Nuovo prodotto", "Create")
 </p>
-<table>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Ricerca per codice o descrizione: @Html.TextBox("search")
+        <input type="submit" value="Ricerca" />
+    </p>
+}
+<table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Code)
+            @Html.ActionLink("Codice", "Index", new { sortOrder = ViewBag.NameSortParm})
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.ActionLink("Descrizione", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th></th>
     </tr>
