@@ -29,7 +29,7 @@ namespace EURISTest.Controllers
             switch (sortOrder)
             {
                 case "id_desc":
-                    catalogs = catalogs.OrderByDescending(p => p.Id);
+                    catalogs = catalogs.OrderByDescending(p => p.Description);
                     break;
                 case "description":
                     catalogs = catalogs.OrderBy(p => p.Description);
