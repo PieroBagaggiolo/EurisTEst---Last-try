@@ -16,8 +16,26 @@ namespace EURISTest.Controllers
         //
         // GET: /Catalog/
 
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string search)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            ViewBag.NameSortParm = sortOrder == "description" ? "description" : "description";
+            var catalogs = from c in db.Catalogs
+                           select c;
+            if (!String.IsNullOrEmpty(search))
+            {
+                catalogs = catalogs.Where(s => s.Description.Contains(search));
+            }
+            switch (sortOrder)
+            {
+                case "id_desc":
+                    catalogs = catalogs.OrderByDescending(p => p.Id);
+                    break;
+                case "description":
+                    catalogs = catalogs.OrderBy(p => p.Description);
+                    break;
+            }
+            catalogs = catalogs.OrderBy(c => c.Description);
             return View(db.Catalogs.ToList());
         }
 
